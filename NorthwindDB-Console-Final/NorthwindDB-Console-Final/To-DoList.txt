@@ -1,0 +1,18 @@
+﻿To receive a maximum letter grade of “C” (405 out of 500 points), your application must perform the following on demand:
+
+1. Add new records to the Products table
+2. Edit a specified record from the Products table
+3. Display all records in the Products table (ProductName only) - user decides if they want to see all products, discontinued products, or active (not discontinued) products. Discontinued products should be distinguished from active products.
+4. Display a specific Product (all product fields should be displayed)
+5. Use NLog to track user functions
+
+
+Immediate to do list:
+1.Set up NLog class (DONE)
+2.Set up top menu
+3.Product Menu
+4.Menu
+
+
+Products to do list:
+1.Make sure unit price is no more than 2 decimals
