@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace NorthwindConsole.Models
+namespace NorthwindDB_Console_Final.Models
 {
     public class Category
     {

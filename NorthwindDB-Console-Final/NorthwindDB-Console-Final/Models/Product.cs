@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NorthwindConsole.Models
+namespace NorthwindDB_Console_Final.Models
 {
     public class Product
     {

@@ -7,10 +7,16 @@ using NLog;
 
 namespace NorthwindDB_Console_Final.Logging
 {
-    class NLogger
+    public class NLogger
     {
-        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        public NLog.Logger Logger { get; set; }
 
+        //private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
+        public NLogger()
+        {
+            Logger = NLog.LogManager.GetCurrentClassLogger();
+        }
         public void Log (string message, string type)
         {
             if(type.ToUpper() == "INFO")
@@ -31,17 +37,17 @@ namespace NorthwindDB_Console_Final.Logging
 
         private void InfoLog (string message)
         {
-            logger.Info(message);
+            Logger.Info(message);
         }
 
         private void ErrorLog(string message)
         {
-            logger.Error(message);
+            Logger.Error(message);
         }
 
         private void WarnLog(string message)
         {
-            logger.Warn(message);
+            Logger.Warn(message);
         }
 
 

@@ -5,7 +5,8 @@ using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
 
-namespace NorthwindConsole.Models
+
+namespace NorthwindDB_Console_Final.Models
 {
     public class NorthwindContext : DbContext
     {
@@ -14,6 +15,15 @@ namespace NorthwindConsole.Models
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
+
+
+        public void AddProduct (Product product)
+        {
+
+        }
+
+
+
 
         public void AddCategory(Category category)
         {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace NorthwindConsole.Models
+namespace NorthwindDB_Console_Final.Models
 {
     public class Supplier
     {

@@ -62,6 +62,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Logging\NLogger.cs" />
+    <Compile Include="Menus\ProductMenu.cs" />
     <Compile Include="Menus\TopMenu.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\NorthwindContext.cs" />
@@ -73,7 +74,9 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="ConfigTemplate.config" />
-    <None Include="NLog.config" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>

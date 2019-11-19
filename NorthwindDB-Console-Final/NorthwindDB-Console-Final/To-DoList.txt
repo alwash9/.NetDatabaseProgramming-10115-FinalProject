@@ -11,8 +11,17 @@ Immediate to do list:
 1.Set up NLog class (DONE)
 2.Set up top menu
 3.Product Menu
-4.Menu
+4.Menu interface
+5.Loop TopMenu
 
+
+FIX
+1. topmenu won't connect to product menu
+2. logger isn't logging. (Fixed: packages missing.)
 
 Products to do list:
 1.Make sure unit price is no more than 2 decimals
+2.Confirmation before product is entered
+
+ON
+Product list.
