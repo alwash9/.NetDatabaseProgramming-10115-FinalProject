@@ -91,9 +91,10 @@ namespace NorthwindDB_Console_Final.Menus
 
         private void EditProduct(Product product)
         {
+            NorthwindContext db = new NorthwindContext();
             ProductsAttr pa = new ProductsAttr();
             ConsoleKeyInfo keyPress;
-            
+            var change = db.Products.FirstOrDefault(p => p.ProductID == product.ProductID);
 
             do
             {
@@ -116,7 +117,7 @@ namespace NorthwindDB_Console_Final.Menus
 
                 if (keyPress.Key == ConsoleKey.D0 || keyPress.Key == ConsoleKey.NumPad0)
                 {
-                    NorthwindContext db = new NorthwindContext();
+                    
                     db.Save();
                     break;
                 }
@@ -133,7 +134,7 @@ namespace NorthwindDB_Console_Final.Menus
 
                 if (keyPress.Key == ConsoleKey.D3 || keyPress.Key == ConsoleKey.NumPad3)
                 {
-                    product.UnitPrice = pa.UnitPrice_Input();
+                    change.UnitPrice = pa.UnitPrice_Input();
                 }
 
                 if (keyPress.Key == ConsoleKey.D4 || keyPress.Key == ConsoleKey.NumPad4)
