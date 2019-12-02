@@ -17,7 +17,7 @@ namespace NorthwindDB_Console_Final.Logging
         {
             Logger = NLog.LogManager.GetCurrentClassLogger();
         }
-        public void Log (string message, string type)
+        public void Log (string type, string message)
         {
             if(type.ToUpper() == "INFO")
             {

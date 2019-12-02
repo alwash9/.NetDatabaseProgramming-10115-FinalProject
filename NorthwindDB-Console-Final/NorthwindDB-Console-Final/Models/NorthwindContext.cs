@@ -1,9 +1,10 @@
-﻿using NLog;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data.Entity;
 using System.Linq;
+using NorthwindDB_Console_Final.Logging;
+
 
 
 namespace NorthwindDB_Console_Final.Models
@@ -17,11 +18,122 @@ namespace NorthwindDB_Console_Final.Models
         public DbSet<Supplier> Suppliers { get; set; }
 
 
-        public void AddProduct (Product product)
+        public void Save()
         {
+            NLogger logger = new NLogger();
+            try
+            {
+                this.SaveChanges();
 
+            }
+            catch (Exception ex)
+            {
+                logger.Log("ERROR", "" + ex);
+                throw;
+            }
+
+            logger.Log("INFO", "Changes were saved to the database.");
         }
 
+        public void AddProduct (Product product)
+        {
+            NLogger logger = new NLogger();
+            try
+            {
+                this.Products.Add(product);
+                this.SaveChanges();
+                logger.Log("INFO", "Product has been added.");
+            }
+            catch (Exception ex)
+            {
+                logger.Log("ERROR", "An error occurred when attempting to add a new product.\n" + ex);
+                throw;
+            }
+            
+        }
+
+        public IQueryable<Product> SearchProducts(string searchName)
+        {
+            NLogger logging = new NLogger();
+            var searchResult = this.Products.Where(b => b.ProductName.Contains(searchName));
+
+            if (searchResult.Count() == 0)
+            {
+
+                logging.Log("WARN", "There were no products found.");
+
+            }
+            else
+            {
+                Console.WriteLine($"{"Product ID",-10}Product Name\n");
+                foreach (var item in searchResult)
+                {
+                    Console.WriteLine($"{item.ProductID,-10}{item.ProductName}\n");
+                }
+
+            }
+
+
+            return searchResult;
+        }
+
+        public void DisplayProducts_Short(List<Product> products)
+        {
+            Console.WriteLine($"{"Product ID", -20}{"Product Name", -20}\n");
+            int Row = 0;
+
+            foreach (var product in products)
+            {
+                Console.Write($"{++Row,-10}");
+                Console.Write($"{product.ProductID, -20}");
+                Console.Write($"{product.ProductName, -20}");
+            }
+        }
+
+        public void DisplayProducts_Short(IQueryable<Product> products)
+        {
+            Console.WriteLine($"{"Product ID",-20}{"Product Name",-20}\n");
+
+            foreach (var product in products)
+            {
+                Console.Write($"{product.ProductID,-20}");
+                Console.Write($"{product.ProductName,-20}");
+            }
+        }
+
+        public void DisplayAllProducts_Short()
+        {
+            var allP = this.Products.OrderBy(b => b.ProductID);
+
+            Console.WriteLine($"{"Product ID",-20}{"Product Name",-20}\n");
+
+            foreach (var product in allP)
+            {
+                Console.Write($"{product.ProductID,-20}");
+                Console.Write($"{product.ProductName,-20}");
+            }
+        }
+
+        public void DisplayAllProducts_Full()
+        {
+            var allP = this.Products.OrderBy(b => b.ProductID);
+
+            foreach (var product in allP)
+            {
+                Console.WriteLine($"{"Product ID",          -25}{product.ProductID}");
+                Console.WriteLine($"{"Product Name",        -25}{product.ProductName}");
+                Console.WriteLine($"{"Quantity Per Unit",   -25}{product.QuantityPerUnit}");
+                Console.WriteLine($"{"Unit Price",          -25}{product.UnitPrice}");
+                Console.WriteLine($"{"Units In Stock",      -25}{product.UnitsInStock}");
+                Console.WriteLine($"{"Units On Order",      -25}{product.UnitsOnOrder}");
+                Console.WriteLine($"{"Reorder Level",       -25}{product.ReorderLevel}");
+                Console.WriteLine($"{"Discontinued",        -25}{product.Discontinued}");
+            }
+
+
+
+
+        }
 
 
 

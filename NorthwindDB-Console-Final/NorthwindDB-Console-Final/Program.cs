@@ -10,21 +10,15 @@ namespace NorthwindDB_Console_Final
 {
     public class Program
     {
-        //private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public static void Main(string[] args)
         {
 
             Console.WriteLine("Hello");
-            //TopMenu menu = new TopMenu();
+            TopMenu menu = new TopMenu();
             //ProductMenu menu2 = new ProductMenu();
-            //menu.StartMenu();
+            menu.Start();
             //menu2.StartMenu();
-
-            NLogger logger = new NLogger();
-
-            //logger.Info("This is a test");
-            logger.Log("Test", "ERROR");
 
             Console.WriteLine("Goodbye");
 

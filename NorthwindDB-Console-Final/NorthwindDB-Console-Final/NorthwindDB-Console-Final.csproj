@@ -61,8 +61,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Control\InputValidation.cs" />
+    <Compile Include="Control\ProductsAttr.cs" />
     <Compile Include="Logging\NLogger.cs" />
-    <Compile Include="Menus\ProductMenu.cs" />
+    <Compile Include="Menus\AddProductsMenu.cs" />
+    <Compile Include="Menus\EditProductsMenu.cs" />
     <Compile Include="Menus\TopMenu.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\NorthwindContext.cs" />
