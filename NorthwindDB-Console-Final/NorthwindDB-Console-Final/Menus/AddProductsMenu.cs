@@ -128,6 +128,7 @@ namespace NorthwindDB_Console_Final.Menus
                 Console.WriteLine("Is this product discontinued?");
                 Console.WriteLine("If yes, Press Y. If No, Press N.");
                 ConsoleKeyInfo keypress = Console.ReadKey();
+                Console.WriteLine();
 
                 if (keypress.Key == ConsoleKey.Y)
                 {
@@ -208,6 +209,7 @@ namespace NorthwindDB_Console_Final.Menus
                 Console.WriteLine("Is this correct?");
                 Console.WriteLine("If yes, Press Y. If No, Press N.");
                 ConsoleKeyInfo keypress = Console.ReadKey();
+                Console.WriteLine();
                 NorthwindContext db = new NorthwindContext();
 
 

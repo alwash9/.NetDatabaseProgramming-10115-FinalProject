@@ -52,7 +52,7 @@ namespace NorthwindDB_Console_Final.Models
             
         }
 
-        public IQueryable<Product> SearchProducts(string searchName)
+        public IQueryable<Product> SearchProductsByName(string searchName)
         {
             NLogger logging = new NLogger();
             var searchResult = this.Products.Where(b => b.ProductName.Contains(searchName));
@@ -65,11 +65,11 @@ namespace NorthwindDB_Console_Final.Models
             }
             else
             {
-                Console.WriteLine($"{"Product ID",-10}Product Name\n");
-                foreach (var item in searchResult)
-                {
-                    Console.WriteLine($"{item.ProductID,-10}{item.ProductName}\n");
-                }
+                //Console.WriteLine($"{"Product ID",-10}Product Name\n");
+                //foreach (var item in searchResult)
+                //{
+                //    Console.WriteLine($"{item.ProductID,-10}{item.ProductName}\n");
+                //}
 
             }
 

@@ -41,15 +41,18 @@ namespace NorthwindDB_Console_Final.Menus
             return searchResult;
         }
 
+
         //Displays a short format of a passed in list of products. 
         public void DisplayProducts_Short(List<Product> products)
         {
-            this.ProductDisplayShortFormatHeadingTemplate();
             int Row = 0;
+            Console.Write($"\n{"Row",-20}");
+
+            this.ProductDisplayShortFormatHeadingTemplate();
 
             foreach (var product in products)
             {
-                Console.Write($"{++Row,-10}");
+                Console.Write($"{++Row,-20}");
                 this.ProductDisplayShortFormatTemplate(product);
                 Console.WriteLine("");
             }
@@ -65,8 +68,9 @@ namespace NorthwindDB_Console_Final.Menus
                 this.ProductDisplayShortFormatTemplate(product);
             }
         }
+        
 
-
+        //Displays a long format of a passed in list of products.
         public void DisplayProducts_Long(List<Product> products)
         {
             int Row = 0;
@@ -78,6 +82,7 @@ namespace NorthwindDB_Console_Final.Menus
             }
         }
 
+        //Displays a long format of a passed in Queryable list of products.
         public void DisplayProducts_Long(IQueryable<Product> products)
         {
             foreach (var product in products)
@@ -88,6 +93,8 @@ namespace NorthwindDB_Console_Final.Menus
             }
         }
 
+
+        //Display a short form of all products in the database.
         public void DisplayAllProducts_Short()
         {
             var allP = db.Products.OrderBy(b => b.ProductID);
@@ -99,7 +106,7 @@ namespace NorthwindDB_Console_Final.Menus
                 this.ProductDisplayShortFormatTemplate(product);
             }
         }
-
+        //Display a long form of all products in the database.
         public void DisplayAllProducts_Long()
         {
             var allP = db.Products.OrderBy(b => b.ProductID);
@@ -113,11 +120,65 @@ namespace NorthwindDB_Console_Final.Menus
 
         }
 
-        private void ProductDisplayShortFormatHeadingTemplate()
+
+        //Display all active products (short form)
+        public void DisplayAllActiveProducts_Short()
         {
-            Console.WriteLine($"\n{"Product ID",-20}{"Product Name",-20}\n");
+            this.ProductDisplayShortFormatHeadingTemplate();
+            var allP = db.Products.OrderBy(b => b.ProductID).Where(p => p.Discontinued == false);
+
+            foreach (var product in allP)
+            {
+                Console.WriteLine();
+                this.ProductDisplayShortFormatTemplate(product);
+            }
+        }
+        //Display all active products (long form)
+        public void DisplayAllActiveProducts_Long()
+        {
+            var allP = db.Products.OrderBy(b => b.ProductID).Where(p => p.Discontinued == false);
+
+            foreach (var product in allP)
+            {
+                Console.WriteLine();
+                this.ProductDisplayLongFormatTemplate(product);
+                Console.WriteLine();
+            }
+
+        }
+        //Display all discontinued products (short form)
+        public void DisplayAllDiscontinuedProducts_Short()
+        {
+            this.ProductDisplayShortFormatHeadingTemplate();
+            var allP = db.Products.OrderBy(b => b.ProductID).Where(p => p.Discontinued == true);
+
+            foreach (var product in allP)
+            {
+                Console.WriteLine();
+                this.ProductDisplayShortFormatTemplate(product);
+            }
+        }
+        //Display all discontinued products (long form)
+        public void DisplayAllDiscontinuedProducts_Long()
+        {
+            var allP = db.Products.OrderBy(b => b.ProductID).Where(p => p.Discontinued == true);
+
+            foreach (var product in allP)
+            {
+                Console.WriteLine();
+                this.ProductDisplayLongFormatTemplate(product);
+                Console.WriteLine();
+            }
+
         }
 
+
+        //Template for short form headings
+        private void ProductDisplayShortFormatHeadingTemplate()
+        {
+            Console.WriteLine($"{"Product ID",-20}{"Product Name",-20}\n");
+        }
+        //Template for short form display
         private void ProductDisplayShortFormatTemplate(Product product)
         {
 
@@ -125,7 +186,7 @@ namespace NorthwindDB_Console_Final.Menus
             Console.Write($"{product.ProductName,-20}\n");
 
         }
-
+        //Template for long form display
         private void ProductDisplayLongFormatTemplate(Product product)
         {
             Console.WriteLine($"{"Product ID:",-25}{product.ProductID}");

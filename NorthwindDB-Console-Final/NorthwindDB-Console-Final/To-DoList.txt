@@ -1,11 +1,11 @@
 ﻿To receive a maximum letter grade of “C” (405 out of 500 points), your application must perform the following on demand:
 
 1. Add new records to the Products table (DONE)
-2. Edit a specified record from the Products table
-3. Display all records in the Products table (ProductName only) - 
+2. Edit a specified record from the Products table (PENDING)
+3. Display all records in the Products table (ProductName only) - (PENDING/ONGOING)
 	user decides if they want to see all products, discontinued products, or active (not discontinued) products. 
 	Discontinued products should be distinguished from active products.
-4. Display a specific Product (all product fields should be displayed)
+4. Display a specific Product (all product fields should be displayed) (ONGOING/PENDING)
 5. Use NLog to track user functions (ONGOING)
 
 
@@ -17,14 +17,16 @@ Immediate to do list:
 5.Loop TopMenu
 6.Modulate Add Product Menu options to be used in edit. (DONE/PENDING)
 7.Set up interfaces
-8.Create display products
+8.Create display products (DONE/PENDING)
+9.Denote $
+10. Create Search
 
 
 FIX
 1. topmenu won't connect to product menu (Fixed? Don't remember the issue.)
 2. logger isn't logging. (Fixed: packages missing.)
 3. TopMenu grammar.
-4. Change Yes/No prompts to readline
+4. Change Yes/No prompts to readline in Add products
 
 Products to do list:
 1.Make sure unit price is no more than 2 decimals

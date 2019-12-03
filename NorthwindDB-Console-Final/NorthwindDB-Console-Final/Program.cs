@@ -13,16 +13,19 @@ namespace NorthwindDB_Console_Final
 
         public static void Main(string[] args)
         {
+            NLogger logger = new NLogger();
+            logger.Log("INFO", "PROGRAM START!");
+            Console.WriteLine();
 
-            Console.WriteLine("Hello");
             TopMenu menu = new TopMenu();
-            //ProductMenu menu2 = new ProductMenu();
             menu.Start();
-            //menu2.StartMenu();
+
 
             Console.WriteLine("Goodbye");
+            logger.Log("INFO", "PROGRAM END!");
 
-            Console.ReadLine();
+            Console.WriteLine("Press any key.");
+            Console.ReadKey();
         }
     }
 }

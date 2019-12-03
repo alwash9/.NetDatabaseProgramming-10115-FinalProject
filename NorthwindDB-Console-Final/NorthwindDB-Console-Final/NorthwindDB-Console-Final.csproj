@@ -67,6 +67,7 @@
     <Compile Include="Menus\AddProductsMenu.cs" />
     <Compile Include="Menus\DisplayMenu.cs" />
     <Compile Include="Menus\EditProductsMenu.cs" />
+    <Compile Include="Menus\ProductsMenu.cs" />
     <Compile Include="Menus\TopMenu.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\NorthwindContext.cs" />
