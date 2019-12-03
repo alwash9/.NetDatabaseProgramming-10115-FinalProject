@@ -65,6 +65,7 @@
     <Compile Include="Control\ProductsAttr.cs" />
     <Compile Include="Logging\NLogger.cs" />
     <Compile Include="Menus\AddProductsMenu.cs" />
+    <Compile Include="Menus\DisplayMenu.cs" />
     <Compile Include="Menus\EditProductsMenu.cs" />
     <Compile Include="Menus\TopMenu.cs" />
     <Compile Include="Models\Category.cs" />

@@ -86,7 +86,7 @@ namespace NorthwindDB_Console_Final.Models
             {
                 Console.Write($"{++Row,-10}");
                 Console.Write($"{product.ProductID, -20}");
-                Console.Write($"{product.ProductName, -20}");
+                Console.Write($"{product.ProductName, -20}\n");
             }
         }
 
