@@ -67,8 +67,10 @@
     <Compile Include="Menus\AddProductsMenu.cs" />
     <Compile Include="Menus\DisplayMenu.cs" />
     <Compile Include="Menus\EditProductsMenu.cs" />
+    <Compile Include="Menus\IMenu.cs" />
     <Compile Include="Menus\ProductsMenu.cs" />
     <Compile Include="Menus\TopMenu.cs" />
+    <Compile Include="Menus\ValidationOptions.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\NorthwindContext.cs" />
     <Compile Include="Models\Product.cs" />

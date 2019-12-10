@@ -2,10 +2,10 @@
 
 1. Add new records to the Products table (DONE)
 2. Edit a specified record from the Products table (PENDING)
-3. Display all records in the Products table (ProductName only) - (PENDING/ONGOING)
+3. Display all records in the Products table (ProductName only) - (DONE/PENDING)
 	user decides if they want to see all products, discontinued products, or active (not discontinued) products. 
 	Discontinued products should be distinguished from active products.
-4. Display a specific Product (all product fields should be displayed) (ONGOING/PENDING)
+4. Display a specific Product (all product fields should be displayed) (DONE/PENDING)
 5. Use NLog to track user functions (ONGOING)
 
 
@@ -20,6 +20,7 @@ Immediate to do list:
 8.Create display products (DONE/PENDING)
 9.Denote $
 10. Create Search
+11. Menu looping
 
 
 FIX

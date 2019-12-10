@@ -8,16 +8,160 @@ using NorthwindDB_Console_Final.Logging;
 
 namespace NorthwindDB_Console_Final.Menus
 {
-    class DisplayMenu
+    public class DisplayMenu : IMenu
     {
         private NLogger logging = new NLogger();
         private NorthwindContext db = new NorthwindContext();
 
         public void Start()
-        { }
+        {
+            Console.WriteLine("(1) Display all products");
+            Console.WriteLine("(2) Find product details");
+
+            var keypress = Console.ReadKey();
+            Console.WriteLine("");
+
+            if (keypress.Key == ConsoleKey.D1 || keypress.Key == ConsoleKey.NumPad1)
+            {
+                Console.WriteLine("(1) Display all products");
+                Console.WriteLine("(2) Display all active products");
+                Console.WriteLine("(3) Display all discontinued products");
+
+                var type = Console.ReadKey();
+                Console.WriteLine("");
+                if (type.Key == ConsoleKey.D1 || type.Key == ConsoleKey.NumPad1)
+                {
+                    Console.WriteLine("(1) Display products in short form");
+                    Console.WriteLine("(2) Display products in long form");
+
+                    var form = Console.ReadKey();
+                    Console.WriteLine("");
+
+                    if (form.Key == ConsoleKey.D1 || form.Key == ConsoleKey.NumPad1)
+                    {
+                        DisplayAllProducts_Short();
+                    }
+                    else if (form.Key == ConsoleKey.D2 || form.Key == ConsoleKey.NumPad2)
+                    {
+                        DisplayAllProducts_Long();
+                    }
+                    else
+                    {
+                        logging.Log("WARN", "Please press a valid option. Try again.");
+                    }
+                }
+                else if (type.Key == ConsoleKey.D2 || type.Key == ConsoleKey.NumPad2)
+                {
+                    Console.WriteLine("(1) Display products in short form");
+                    Console.WriteLine("(2) Display products in long form");
+
+                    var form = Console.ReadKey();
+                    Console.WriteLine("");
+
+                    if (form.Key == ConsoleKey.D1 || form.Key == ConsoleKey.NumPad1)
+                    {
+                        DisplayAllActiveProducts_Short();
+                    }
+                    else if (form.Key == ConsoleKey.D2 || form.Key == ConsoleKey.NumPad2)
+                    {
+                        DisplayAllActiveProducts_Long();
+                    }
+                    else
+                    {
+                        logging.Log("WARN", "Please press a valid option. Try again.");
+                    }
+                }
+                else if (type.Key == ConsoleKey.D3 || type.Key == ConsoleKey.NumPad3)
+                {
+                    Console.WriteLine("(1) Display products in short form");
+                    Console.WriteLine("(2) Display products in long form");
+
+                    var form = Console.ReadKey();
+                    Console.WriteLine("");
+
+                    if (form.Key == ConsoleKey.D1 || form.Key == ConsoleKey.NumPad1)
+                    {
+                        DisplayAllDiscontinuedProducts_Short();
+                    }
+                    else if (form.Key == ConsoleKey.D2 || form.Key == ConsoleKey.NumPad2)
+                    {
+                        DisplayAllDiscontinuedProducts_Long();
+                    }
+                    else
+                    {
+                        logging.Log("WARN", "Please press a valid option. Try again.");
+                    }
+                }
+                else
+                {
+                    logging.Log("WARN", "Please press a valid option. Try again.");
+                }
+
+            }
+            else if (keypress.Key == ConsoleKey.D2 || keypress.Key == ConsoleKey.NumPad2)
+            {
+                Console.WriteLine("Please enter the product that you are searching for.");
+                string search = Console.ReadLine();
+
+
+                var results = SearchProducts(search);
+
+                if(results.Count() == 0)
+                {
+
+                }
+                else
+                {
+                    Console.WriteLine("(1) Display results in short form");
+                    Console.WriteLine("(2) Display results in long form");
+
+                    var form = Console.ReadKey();
+                    Console.WriteLine("");
+
+                    if (form.Key == ConsoleKey.D1 || form.Key == ConsoleKey.NumPad1)
+                    {
+                        DisplayProducts_Short(results);
+                    }
+                    else if (form.Key == ConsoleKey.D2 || form.Key == ConsoleKey.NumPad2)
+                    {
+                        DisplayProducts_Long(results);
+                    }
+                    else
+                    {
+                        logging.Log("WARN", "Please press a valid option. Try again.");
+                    }
+                }
+
+            }
+            else
+            {
+                logging.Log("WARN", "Please press a valid option. Try again.");
+            }
+        }
+
+
+        private List<Product> SearchProducts(string search)
+        {
+            NLogger logging = new NLogger();
+            var searchResult = db.Products.Where(b => b.ProductName.Contains(search)).ToList();
+
+            if (searchResult.Count() == 0)
+            {
+
+                logging.Log("WARN", "There were no products found.");
+
+            }
+            else
+            {
+                logging.Log("INFO", searchResult.Count() + " Products Found.");
+            }
+            return searchResult;
+
+        }
+
 
         //Returns possibly multiple search results. (QueryableList)
-        public IQueryable<Product> SearchProducts(string searchName)
+        public IQueryable<Product> SearchProductsDisplay(string searchName)
         {
             NLogger logging = new NLogger();
             var searchResult = db.Products.Where(b => b.ProductName.Contains(searchName));
@@ -42,17 +186,26 @@ namespace NorthwindDB_Console_Final.Menus
         }
 
 
+
         //Displays a short format of a passed in list of products. 
         public void DisplayProducts_Short(List<Product> products)
         {
             int Row = 0;
-            Console.Write($"\n{"Row",-20}");
+
+            if (products.Count() > 1)
+            {
+                Console.Write($"\n{"Row",-20}");
+            }
 
             this.ProductDisplayShortFormatHeadingTemplate();
 
             foreach (var product in products)
             {
-                Console.Write($"{++Row,-20}");
+                if (products.Count() > 1)
+                {
+                    Console.Write($"{++Row,-20}");
+                }
+                
                 this.ProductDisplayShortFormatTemplate(product);
                 Console.WriteLine("");
             }
@@ -76,7 +229,10 @@ namespace NorthwindDB_Console_Final.Menus
             int Row = 0;
             foreach (var product in products)
             {
-                Console.WriteLine($"\n{"Row:",-20}{++Row}");
+                if (products.Count() > 1)
+                {
+                    Console.WriteLine($"\n{"Row:",-20}{++Row}");
+                }
                 this.ProductDisplayLongFormatTemplate(product);
                 Console.WriteLine($"{"Discontinued:",-25}{product.Discontinued}\n");
             }
