@@ -21,15 +21,16 @@ namespace NorthwindDB_Console_Final.Logging
         {
             if(type.ToUpper() == "INFO")
             {
+                
                 this.InfoLog(message);
             }
             
-            if(type.ToUpper() == "ERROR")
+            else if(type.ToUpper() == "ERROR")
             {
                 this.ErrorLog(message);
             }
 
-            if(type.ToUpper() == "WARN")
+            else if(type.ToUpper() == "WARN")
             {
                 this.WarnLog(message);
             }
@@ -37,17 +38,23 @@ namespace NorthwindDB_Console_Final.Logging
 
         private void InfoLog (string message)
         {
+            Console.WriteLine();
             Logger.Info(message);
+            Console.WriteLine();
         }
 
         private void ErrorLog(string message)
         {
+            Console.WriteLine();
             Logger.Error(message);
+            Console.WriteLine();
         }
 
         private void WarnLog(string message)
         {
+            Console.WriteLine();
             Logger.Warn(message);
+            Console.WriteLine();
         }
 
 

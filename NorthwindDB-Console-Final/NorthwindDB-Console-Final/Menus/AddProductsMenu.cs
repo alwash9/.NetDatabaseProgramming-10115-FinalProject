@@ -14,6 +14,10 @@ namespace NorthwindDB_Console_Final.Menus
     {
         public void Start()
         {
+
+            Console.WriteLine("\n\tADD A PRODUCT\n");
+
+
             string productName;
             string quantityPerUnit;
             decimal? unitPrice;
@@ -21,6 +25,7 @@ namespace NorthwindDB_Console_Final.Menus
             Int16? unitsOnOrder;
             Int16? reorderLevel;
             bool discontinued;
+            int? categoryId;
 
             string tempn;
             NLogger logging = new NLogger();
@@ -148,6 +153,57 @@ namespace NorthwindDB_Console_Final.Menus
                 }
             } while (true);
 
+            do
+            {
+                Console.WriteLine("What category does this product belong to?" + nullableMessage);
+
+                tempn = Console.ReadLine();
+
+                if (tempn == "" || tempn == null)
+                {
+                    categoryId = null;
+                    break;
+                }
+                else
+                {
+
+
+                    NorthwindContext db = new NorthwindContext();
+                    DisplayOptions disOp = new DisplayOptions();
+
+                    var category = db.Categories.FirstOrDefault(c => c.CategoryName.Contains(tempn));
+
+                    disOp.DisplayCategory(category);
+
+
+                    Console.WriteLine("Is this the correct category? (If yes, press Y. If no, press N.)");
+                    var keypress = Console.ReadKey();
+
+
+                    if (keypress.Key == ConsoleKey.Y)
+                    {
+
+                        categoryId = category.CategoryId;
+                        break;
+                    }
+                    else if (keypress.Key == ConsoleKey.N)
+                    {
+                        logging.Log("WARN", "Setting Category to Null");
+
+                        categoryId = null;
+                        break;
+                    }
+                    else
+                    {
+                        logging.Log("ERROR", "A valid key was not pressed. Please press (Y)es or (N)o.");
+                    }
+                }
+
+            } while (true);
+
+
+            //add category
+
             Product product = new Product
             {
                 ProductName = productName,
@@ -156,7 +212,8 @@ namespace NorthwindDB_Console_Final.Menus
                 UnitsInStock = unitsInStock,
                 UnitsOnOrder = unitsOnOrder,
                 ReorderLevel = reorderLevel,
-                Discontinued = discontinued
+                Discontinued = discontinued,
+                CategoryId = categoryId
             };
 
             if (ConfirmSelections(product) == true)
@@ -176,73 +233,6 @@ namespace NorthwindDB_Console_Final.Menus
         }
 
 
-        //public for the ProductsAttr class. Pending.
-        public bool ValidateDecimal(string input)
-        {
-            if(input == "")
-            {
-                return true;
-            }
-            var check = decimal.TryParse(input, out decimal result);
-            return check;
-        }
 
-        //public for the ProductsAttr class. Pending.
-        public bool ValidateInt16(string input)
-        {
-            if (input == "")
-            {
-                return true;
-            }
-            var check = Int16.TryParse(input, out short result);
-            return check;
-        }
-
-        /*private void ConfirmSelections(Product product)
-        {
-            NLogger logging = new NLogger();
-
-            //loop through properties
-            //foreach (PropertyInfo prop in product.GetType().GetProperties())
-            //{
-            //    Console.WriteLine("{0} = {1}", prop.Name, prop.GetValue(prop)); //sketchy, check
-            //}
-
-            Console.WriteLine("\nProduct Name: {0}",      product.ProductName);
-            Console.WriteLine("Quantity Per Unit: {0}", product.QuantityPerUnit);
-            Console.WriteLine("Unit Price: {0}",        product.UnitPrice);
-            Console.WriteLine("Units In Stock: {0}",    product.UnitsInStock);
-            Console.WriteLine("Units On Order: {0}",    product.UnitsOnOrder);
-            Console.WriteLine("Reorder Level: {0}",     product.ReorderLevel);
-            Console.WriteLine("Discontinued: {0}\n",      product.Discontinued);
-
-            
-            do
-            {
-                Console.WriteLine("Is this correct?");
-                Console.WriteLine("If yes, Press Y. If No, Press N.");
-                ConsoleKeyInfo keypress = Console.ReadKey();
-                Console.WriteLine();
-                NorthwindContext db = new NorthwindContext();
-
-
-                if (keypress.Key == ConsoleKey.Y)
-                {
-                    db.AddProduct(product);
-                    break;
-                }
-                else if (keypress.Key == ConsoleKey.N)
-                {
-                    logging.Log("WARN", "Operation Cancelled.");
-                    break;
-                }
-                else
-                {
-                    logging.Log("ERROR", "A valid key was not pressed. Please press (Y)es or (N)o.");
-                }
-            } while (true);
-
-            Console.ReadLine();
-        }*/
     }
 }

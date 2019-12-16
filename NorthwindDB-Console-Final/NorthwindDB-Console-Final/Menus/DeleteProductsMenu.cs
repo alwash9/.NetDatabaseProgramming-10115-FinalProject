@@ -14,77 +14,86 @@ namespace NorthwindDB_Console_Final.Menus
     {
         public void Start()
         {
-            Console.WriteLine("\tDELETE PRODUCT\n");
-
-            Console.WriteLine("Delete which product?\n");
-            Console.WriteLine("(1) Find by ID");
-            Console.WriteLine("(2) Find by Name");
-
-            var keypress = Console.ReadKey();
-            Console.WriteLine("");
-
-            NorthwindContext db = new NorthwindContext();
-            DisplayOptions disOp = new DisplayOptions();
-
-            List<Product> results = null;
-
-            if (keypress.Key == ConsoleKey.D1 || keypress.Key == ConsoleKey.NumPad1)
+            do
             {
+                Console.WriteLine("\n\tDELETE PRODUCT\n");
 
-                Console.WriteLine("Please enter the ID of the product that you are searching for.");
-                int search = IntValidation(Console.ReadLine());
+                Console.WriteLine("Delete which product?\n");
+                Console.WriteLine("(1) Find by ID");
+                Console.WriteLine("(2) Find by Name");
 
+                Console.WriteLine("(ESC) Return to Products menu");
 
-                results = db.SearchProducts(search).ToList();
+                var keypress = Console.ReadKey();
+                Console.WriteLine("");
 
-            }
-            else if (keypress.Key == ConsoleKey.D2 || keypress.Key == ConsoleKey.NumPad2)
-            {
+                NorthwindContext db = new NorthwindContext();
+                DisplayOptions disOp = new DisplayOptions();
 
-                Console.WriteLine("Please enter the Name of the product that you are searching for.");
-                string search = Console.ReadLine();
+                List<Product> results = null;
 
-                results = db.SearchProducts(search).ToList();
-            }
-            else
-            {
-                NLogger logging = new NLogger();
+                if (keypress.Key == ConsoleKey.D1 || keypress.Key == ConsoleKey.NumPad1)
+                {
 
-                logging.Log("ERROR", "A valid key was not pressed. Please press (Y)es or (N)o.");
-
-            }
+                    Console.WriteLine("Please enter the ID of the product that you are searching for.");
+                    int search = IntValidation(Console.ReadLine());
 
 
-            if (results == null)
-            {
+                    results = db.SearchProducts(search);
 
-            }
-            else if (results.Count() == 0)
-            {
+                }
+                else if (keypress.Key == ConsoleKey.D2 || keypress.Key == ConsoleKey.NumPad2)
+                {
 
-            }
-            else if (results.Count() == 1)
-            {
+                    Console.WriteLine("Please enter the Name of the product that you are searching for.");
+                    string search = Console.ReadLine();
 
-                disOp.DisplayProducts_Long(results);
+                    results = db.SearchProducts(search);
+                }
+                else if (keypress.Key == ConsoleKey.Escape)
+                {
+                    break;
+                }
+                else
+                {
+                    NLogger logging = new NLogger();
 
-                this.Delete(results[0]);
-            }
-            else
-            {
-                disOp.DisplayProducts_Short(results);
+                    logging.Log("ERROR", "A valid key was not pressed. Please press (Y)es or (N)o.");
 
-
-                Console.WriteLine("Which Product?");
-                Console.Write("Enter the Row number: \t");
-
-                string choice = Console.ReadLine();
-                int vInput = IntValidation(choice);
+                }
 
 
-                this.Delete(results[vInput - 1]);
+                if (results == null)
+                {
 
-            }
+                }
+                else if (results.Count() == 0)
+                {
+
+                }
+                else if (results.Count() == 1)
+                {
+
+                    //disOp.DisplayProducts_Long(results);
+
+                    this.Delete(results[0]);
+                }
+                else
+                {
+                    disOp.DisplayProducts_Short(results);
+
+
+                    Console.WriteLine("Which Product?");
+                    Console.Write("Enter the Row number: \t");
+
+                    string choice = Console.ReadLine();
+                    int vInput = IntValidation(choice);
+
+
+                    this.Delete(results[vInput - 1]);
+
+                }
+            } while (true);
         }
 
 

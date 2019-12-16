@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using NorthwindDB_Console_Final.Control;
+using NorthwindDB_Console_Final.Utility;
 using NorthwindDB_Console_Final.Logging;
 
 
 namespace NorthwindDB_Console_Final.Menus
 {
-    class TopMenu
+    class TopMenu : IMenu
     {
         private NLogger logging = new NLogger();
 
@@ -19,13 +19,17 @@ namespace NorthwindDB_Console_Final.Menus
 
             do
             {
+                Console.WriteLine("\n\t\t MAIN MENU");
 
                 Console.WriteLine("\tPlease choose an option. (Press the key that is enclosed by '()')\n");
 
 
                 Console.WriteLine("(1) PRODUCTS MENU");
-                Console.WriteLine("(0) TESTING");
+                Console.WriteLine("(2) CATEGORIES MENU");
+                //Console.WriteLine("(0) TESTING");
                 Console.WriteLine("(ESC) Exit");
+
+                Console.WriteLine();
 
 
                 var keypress = Console.ReadKey();
@@ -36,12 +40,17 @@ namespace NorthwindDB_Console_Final.Menus
                     ProductsMenu pMenu = new ProductsMenu();
                     pMenu.Start();
                 }
-
-                if (keypress.Key == ConsoleKey.D0 || keypress.Key == ConsoleKey.NumPad0)
+                else if (keypress.Key == ConsoleKey.D2 || keypress.Key == ConsoleKey.NumPad2)
                 {
-                    TestingClass testMenu = new TestingClass();
-                    testMenu.Start();
+                    IMenu cMenu = new CategoriesMenu();
+                    cMenu.Start();
                 }
+
+                //if (keypress.Key == ConsoleKey.D0 || keypress.Key == ConsoleKey.NumPad0)
+                //{
+                //    TestingClass testMenu = new TestingClass();
+                //    testMenu.Start();
+                //}
 
 
 

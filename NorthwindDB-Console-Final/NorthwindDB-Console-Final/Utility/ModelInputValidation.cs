@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NorthwindDB_Console_Final.Logging;
 using NorthwindDB_Console_Final.Menus;
+using NorthwindDB_Console_Final.Models;
 
 
 namespace NorthwindDB_Console_Final.Utility
@@ -41,7 +42,6 @@ namespace NorthwindDB_Console_Final.Utility
 
         public decimal? UnitPrice_Input()
         {
-            AddProductsMenu vProduct = new AddProductsMenu();
             decimal? unitPrice;
 
             do
@@ -49,7 +49,7 @@ namespace NorthwindDB_Console_Final.Utility
                 Console.WriteLine("What is the unit price for this product?" + nullableMessage);
                 string tempn = Console.ReadLine();
 
-                if (vProduct.ValidateDecimal(tempn))
+                if (ValidateDecimal(tempn))
                 {
                     if (tempn == "")
                     {
@@ -73,7 +73,6 @@ namespace NorthwindDB_Console_Final.Utility
 
         public Int16? UnitsInStock_Input()
         {
-            AddProductsMenu vProduct = new AddProductsMenu();
             Int16? unitsInStock;
 
             do
@@ -81,7 +80,7 @@ namespace NorthwindDB_Console_Final.Utility
                 Console.WriteLine("What is the number of units in stock?" + nullableMessage);
                 string tempn = Console.ReadLine();
 
-                if (vProduct.ValidateInt16(tempn))
+                if (ValidateInt16(tempn))
                 {
                     if (tempn == "")
                     {
@@ -105,14 +104,13 @@ namespace NorthwindDB_Console_Final.Utility
 
         public Int16? UnitsOnOrder_Input()
         {
-            AddProductsMenu vProduct = new AddProductsMenu();
             Int16? unitsOnOrder;
 
             do
             {
                 Console.WriteLine("What is the number of units on order?" + nullableMessage);
                 string tempn = Console.ReadLine();
-                if (vProduct.ValidateInt16(tempn))
+                if (ValidateInt16(tempn))
                 {
                     if (tempn == "")
                     {
@@ -136,14 +134,14 @@ namespace NorthwindDB_Console_Final.Utility
 
         public Int16? ReorderLevel_Input()
         {
-            AddProductsMenu vProduct = new AddProductsMenu();
+            
             Int16? reorderLevel;
 
             do
             {
                 Console.WriteLine("What is the reorder level?" + nullableMessage);
                 string tempn = Console.ReadLine();
-                if (vProduct.ValidateInt16(tempn))
+                if (ValidateInt16(tempn))
                 {
                     if (tempn == "")
                     {
@@ -166,7 +164,6 @@ namespace NorthwindDB_Console_Final.Utility
 
         public bool Discontinued_Input()
         {
-            AddProductsMenu vProduct = new AddProductsMenu();
             bool discontinued;
 
             do
@@ -193,6 +190,46 @@ namespace NorthwindDB_Console_Final.Utility
             } while (true);
 
             return discontinued;
+        }
+
+        public int? Category_Input()
+        {
+            NorthwindContext db = new NorthwindContext();
+            DisplayOptions disOp = new DisplayOptions();
+
+
+            Console.WriteLine("What category does this product belong to?" + nullableMessage);
+
+            string tempn = Console.ReadLine();
+            var category = db.Categories.FirstOrDefault(c => c.CategoryName.Contains(tempn));
+
+            disOp.DisplayCategory(category);
+
+            do
+            {
+                Console.WriteLine("Is this the correct category? (If yes, press Y. If no, press N.)");
+                var keypress = Console.ReadKey();
+
+                if (keypress.Key == ConsoleKey.Y)
+                {
+
+                    return category.CategoryId;
+                }
+                else if (keypress.Key == ConsoleKey.N)
+                {
+                    logging.Log("WARN", "Setting Category to Null");
+
+                    return null;
+                }
+                else
+                {
+                    logging.Log("ERROR", "A valid key was not pressed. Please press (Y)es or (N)o.");
+                }
+
+
+
+            } while (true);
+
         }
 
 

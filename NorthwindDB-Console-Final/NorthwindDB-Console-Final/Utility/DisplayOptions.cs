@@ -211,11 +211,11 @@ namespace NorthwindDB_Console_Final.Utility
 
             var allC = db.Categories.OrderBy(b => b.CategoryId);
 
-            this.CategoryDisplayHeadingTemplate();
+            //this.CategoryDisplayHeadingTemplate();
 
             foreach (var category in allC)
             {
-                this.CategoryDisplay(category);
+                this.DisplayCategory(category);
             }
         }
 
@@ -223,73 +223,75 @@ namespace NorthwindDB_Console_Final.Utility
         public void DisplayCategories(List<Category> categories)
         {
 
-            this.CategoryDisplayHeadingTemplate();
+            //this.CategoryDisplayHeadingTemplate();
 
             foreach (var category in categories)
             {
 
-                this.CategoryDisplay(category);
+                this.DisplayCategory(category);
                 Console.WriteLine("");
             }
         }
 
-        //Display from a single category
-        public void DisplayCategory(Category category)
-        {
-            Console.WriteLine("Category ID: {0}", category.CategoryId);
-            Console.WriteLine("Category Name: {0}", category.CategoryName);
-            Console.WriteLine("Category Description: {0}\n", category.Description);
-        }
 
         //Display from a single category and its related products.
         public void DisplayCategoryAndProducts(Category category)
         {
 
             this.DisplayCategory(category);
-            Console.WriteLine("\n--PRODUCTS--");
-            this.DisplayProducts_Short(category.Products);
+            if (category.Products.Count() > 0)
+            {
+                Console.WriteLine("\n--PRODUCTS--");
+                this.DisplayProducts_Short(category.Products);
+            }
+            else
+            {
+                Console.WriteLine("There are no products in this category.");
+            }
 
         }
 
         public void DisplayCategoryAndActiveProducts(Category category)
         {
 
-            this.DisplayCategory(category);
-            Console.WriteLine("\n--PRODUCTS--");
-            this.DisplayProducts_Short(category.Products.Where(p => p.Discontinued == false).ToList());
+            if (category.Products.Count() > 0)
+            {
+                this.DisplayCategory(category);
+                Console.WriteLine("\n--PRODUCTS--");
+                this.DisplayProducts_Short(category.Products.Where(p => p.Discontinued == false).ToList());
+            }
+            else
+            {
+                Console.WriteLine("There are no products in this category.");
+            }
 
         }
 
         public void DisplayCategoryAndDiscontinuedProducts(Category category)
         {
-
-            this.DisplayCategory(category);
-            Console.WriteLine("\n--PRODUCTS--");
-            this.DisplayProducts_Short(category.Products.Where(p => p.Discontinued == true).ToList());
-
+            if (category.Products.Count() > 0)
+            {
+                this.DisplayCategory(category);
+                Console.WriteLine("\n--PRODUCTS--");
+                this.DisplayProducts_Short(category.Products.Where(p => p.Discontinued == true).ToList());
+            }
+            else
+            {
+                Console.WriteLine("There are no products in this category.");
+            }
         }
 
 
 
-        //Template for short form headings
-        private void CategoryDisplayHeadingTemplate()
-        {
-            Console.WriteLine($"{"Category ID",-10}{"Category Name",-10}\n");
-            
-        }
         //Template for short form display
-        private void CategoryDisplay(Category category)
+        public void DisplayCategory(Category category)
         {
 
-            Console.Write($"{category.CategoryId,-20}");
-            Console.Write($"{category.CategoryName,-20}\n");
-            Console.WriteLine("Category Description: {0}", category.Description);
+            Console.WriteLine($"\n{"Category ID:",-25} {category.CategoryId}");
+            Console.WriteLine($"{"Category Name:",-25} {category.CategoryName,-20}");
+            Console.WriteLine($"{"Category Description:",-25} {category.Description}\n");
 
         }
-
-
-
-
 
 
     }

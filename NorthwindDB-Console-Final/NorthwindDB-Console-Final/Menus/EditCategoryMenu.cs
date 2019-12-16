@@ -42,8 +42,7 @@ namespace NorthwindDB_Console_Final.Menus
                     NorthwindContext db = new NorthwindContext();
                     Console.WriteLine("Which category are you looking for (Name)?");
 
-                    var results = db.SearchCategory(Console.ReadLine(), true); //Return List?
-                    var rList = results.ToList();
+                    var results = db.SearchCategory(Console.ReadLine(), true); 
 
 
 
@@ -53,9 +52,8 @@ namespace NorthwindDB_Console_Final.Menus
                     }
                     else
                     {
-                        disOp.DisplayCategories(rList);
 
-                        disOp.DisplayCategoryAndProducts(rList.FirstOrDefault());
+                        disOp.DisplayCategoryAndProducts(results.FirstOrDefault());
                     }
                 }
 
@@ -68,7 +66,6 @@ namespace NorthwindDB_Console_Final.Menus
 
 
                     var results = db.SearchCategory(toFind, true);
-                    var rList = results.ToList();
 
                     if (results.Count() == 0)
                     {
@@ -76,7 +73,7 @@ namespace NorthwindDB_Console_Final.Menus
                     }
                     else if (results.Count() == 1)
                     {
-                        disOp.DisplayCategories(rList);
+                        disOp.DisplayCategories(results);
 
                         Console.WriteLine("Is this the correct Product?");
                         Console.WriteLine("If yes, Press Y. If No, Press N.");
@@ -90,7 +87,7 @@ namespace NorthwindDB_Console_Final.Menus
                             if (keypress2.Key == ConsoleKey.Y)
                             {
 
-                                EditCategory(rList[0]);
+                                EditCategory(results[0]);
                                 break;
                             }
                             else if (keypress2.Key == ConsoleKey.N)
@@ -109,7 +106,7 @@ namespace NorthwindDB_Console_Final.Menus
                     {
                         int row = 0;
 
-                        foreach (var category in rList)
+                        foreach (var category in results)
                         {
                             Console.WriteLine("Row: {0}", row++);
                             disOp.DisplayCategory(category);
@@ -124,7 +121,7 @@ namespace NorthwindDB_Console_Final.Menus
                         int vInput = IntValidation(choice);
 
 
-                        EditCategory(rList[vInput - 1]);
+                        EditCategory(results[vInput - 1]);
 
                     }
 
@@ -136,19 +133,17 @@ namespace NorthwindDB_Console_Final.Menus
                     NorthwindContext db = new NorthwindContext();
                     Console.WriteLine("What is the ID of the category that you are looking for?");
                     int toFind = IntValidation(Console.ReadLine());
-                      
 
 
                     var results = db.SearchCategory(toFind);
-                    var rList = results.ToList();
 
                     if (results.Count() == 0)
                     {
-                        //logging.Log("WARN", "No results found. Try Again.");
+                        
                     }
                     else if (results.Count() == 1)
                     {
-                        disOp.DisplayCategories(rList);
+                        disOp.DisplayCategories(results);
 
                         Console.WriteLine("Is this the correct Product?");
                         Console.WriteLine("If yes, Press Y. If No, Press N.");
@@ -162,7 +157,7 @@ namespace NorthwindDB_Console_Final.Menus
                             if (keypress2.Key == ConsoleKey.Y)
                             {
 
-                                EditCategory(rList[0]);
+                                EditCategory(results[0]);
                                 break;
                             }
                             else if (keypress2.Key == ConsoleKey.N)
@@ -182,7 +177,7 @@ namespace NorthwindDB_Console_Final.Menus
                     {
                         int row = 0;
 
-                        foreach (var category in rList)
+                        foreach (var category in results)
                         {
                             Console.WriteLine("Row: {0}", row++);
                             disOp.DisplayCategory(category);
@@ -197,7 +192,7 @@ namespace NorthwindDB_Console_Final.Menus
                         int vInput = IntValidation(choice);
 
 
-                        EditCategory(rList[vInput - 1]);
+                        EditCategory(results[vInput - 1]);
 
                     }
 
@@ -213,7 +208,6 @@ namespace NorthwindDB_Console_Final.Menus
 
 
                     var results = db.SearchCategory(toFind, false);
-                    var rList = results.ToList();
 
                     if (results.Count() == 0)
                     {
@@ -221,7 +215,7 @@ namespace NorthwindDB_Console_Final.Menus
                     }
                     else if (results.Count() == 1)
                     {
-                        disOp.DisplayCategories(rList);
+                        disOp.DisplayCategories(results);
 
                         Console.WriteLine("Is this the correct Product?");
                         Console.WriteLine("If yes, Press Y. If No, Press N.");
@@ -235,7 +229,7 @@ namespace NorthwindDB_Console_Final.Menus
                             if (keypress2.Key == ConsoleKey.Y)
                             {
 
-                                EditCategory(rList[0]);
+                                EditCategory(results[0]);
                                 break;
                             }
                             else if (keypress2.Key == ConsoleKey.N)
@@ -255,7 +249,7 @@ namespace NorthwindDB_Console_Final.Menus
                     {
                         int row = 0;
 
-                        foreach (var category in rList)
+                        foreach (var category in results)
                         {
                             Console.WriteLine("Row: {0}", row++);
                             disOp.DisplayCategory(category);
@@ -270,7 +264,7 @@ namespace NorthwindDB_Console_Final.Menus
                         int vInput = IntValidation(choice);
 
 
-                        EditCategory(rList[vInput - 1]);
+                        EditCategory(results[vInput - 1]);
 
                     }
 

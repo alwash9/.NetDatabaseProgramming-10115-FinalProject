@@ -16,136 +16,154 @@ namespace NorthwindDB_Console_Final.Menus
 
         public void Start()
         {
-            Console.WriteLine("(1) Display all Categories");
-            Console.WriteLine("(2) Display Category with all related products");
-
-            var keypress = Console.ReadKey();
-            Console.WriteLine("");
-
-            DisplayOptions disOp = new DisplayOptions();
-
-            //Display all categories
-            if (keypress.Key == ConsoleKey.D1 || keypress.Key == ConsoleKey.NumPad1)
+            do
             {
-                disOp.DisplayAllCategories();
-            }
-            else if (keypress.Key == ConsoleKey.D2 || keypress.Key == ConsoleKey.NumPad2)
-            {
-                Console.WriteLine("What Category are you looking for? \n");
+                Console.WriteLine("\n\tDISPLAY CATEGORIES\n");
 
-                Console.WriteLine("(1) Search by ID");
-                Console.WriteLine("(2) Search by Name");
-                Console.WriteLine("(3) Search by Description");
+                Console.WriteLine("(1) Display all Categories");
+                Console.WriteLine("(2) Display a Category with all related products");
 
-                var keypress2 = Console.ReadKey();
+                Console.WriteLine("Press ESC to go back");
+
+                var keypress = Console.ReadKey();
                 Console.WriteLine("");
 
-                Category choice = null;
-                List<Category> results = null;
+                DisplayOptions disOp = new DisplayOptions();
 
-                if (keypress2.Key == ConsoleKey.D1 || keypress2.Key == ConsoleKey.NumPad1)
+                //Display all categories
+                if (keypress.Key == ConsoleKey.D1 || keypress.Key == ConsoleKey.NumPad1)
                 {
-                    Console.WriteLine("What is the ID of the Category you want to display?");
-                    int toFind = IntValidation(Console.ReadLine());
-
-                    results = db.SearchCategory(toFind).ToList();
+                    disOp.DisplayAllCategories();
                 }
-                else if (keypress2.Key == ConsoleKey.D2 || keypress2.Key == ConsoleKey.NumPad2)
+                else if (keypress.Key == ConsoleKey.D2 || keypress.Key == ConsoleKey.NumPad2)
                 {
-                    Console.WriteLine("What is the Name of the Category you want to display?");
-                    string toFind = Console.ReadLine();
+                    Console.WriteLine("What Category are you looking for? \n");
 
-                     results = db.SearchCategory(toFind, true).ToList();
-                }
-                else if (keypress2.Key == ConsoleKey.D3 || keypress2.Key == ConsoleKey.NumPad3)
-                {
-                    Console.WriteLine("What is the Description of the Category you want to display?");
-                    string toFind = Console.ReadLine();
+                    Console.WriteLine("(1) Search by ID");
+                    Console.WriteLine("(2) Search by Name");
+                    Console.WriteLine("(3) Search by Description");
 
-                    results = db.SearchCategory(toFind, false).ToList();
-                }
-                else
-                {
-                    logging.Log("WARN", "Please press a valid option. Try again.");
-                }
+                    var keypress2 = Console.ReadKey();
+                    Console.WriteLine("");
 
+                    Category choice = null;
+                    List<Category> results = null;
 
-
-                if (results == null)
-                {
-
-                }
-
-                else if (results.Count == 0)
-                {
-
-                }
-                else if (results.Count == 1)
-                {
-                    disOp.DisplayCategory(results[0]);
-                    choice = results[0];
-                }
-                else
-                {
-
-                    int row = 0;
-
-                    foreach (var category in results)
+                    if (keypress2.Key == ConsoleKey.D1 || keypress2.Key == ConsoleKey.NumPad1)
                     {
-                        Console.WriteLine("Row: {0}", row++);
-                        disOp.DisplayCategory(category);
-                        Console.WriteLine("");
+                        Console.WriteLine("What is the ID of the Category you want to display?");
+                        int toFind = IntValidation(Console.ReadLine());
+
+                        results = db.SearchCategory(toFind).ToList();
+                    }
+                    else if (keypress2.Key == ConsoleKey.D2 || keypress2.Key == ConsoleKey.NumPad2)
+                    {
+                        Console.WriteLine("What is the Name of the Category you want to display?");
+                        string toFind = Console.ReadLine();
+
+                        results = db.SearchCategory(toFind, true).ToList();
+                    }
+                    else if (keypress2.Key == ConsoleKey.D3 || keypress2.Key == ConsoleKey.NumPad3)
+                    {
+                        Console.WriteLine("What is the Description of the Category you want to display?");
+                        string toFind = Console.ReadLine();
+
+                        results = db.SearchCategory(toFind, false).ToList();
+                    }
+                    else
+                    {
+                        logging.Log("WARN", "Please press a valid option. Try again.");
                     }
 
 
-                    Console.WriteLine("Which Category would you like to display?");
-                    Console.Write("Enter the Row number: \t");
 
-                    string rowChoice = Console.ReadLine();
-                    int vInput = IntValidation(rowChoice);
+                    if (results == null)
+                    {
+
+                    }
+
+                    else if (results.Count == 0)
+                    {
+
+                    }
+                    else if (results.Count == 1)
+                    {
+                        disOp.DisplayCategory(results[0]);
+                        choice = results[0];
+                    }
+                    else
+                    {
+
+                        int row = 0;
+
+                        foreach (var category in results)
+                        {
+                            Console.WriteLine("Row: {0}", row++);
+                            disOp.DisplayCategory(category);
+                            Console.WriteLine("");
+                        }
 
 
-                    choice = results[vInput - 1];
+                        Console.WriteLine("Which Category would you like to display?");
+                        Console.Write("Enter the Row number: \t");
+
+                        string rowChoice = Console.ReadLine();
+                        int vInput = IntValidation(rowChoice);
+
+
+                        choice = results[vInput - 1];
+                    }
+
+
+
+                    if (results.Count > 0)
+                    {
+
+
+                        Console.WriteLine("(1) Display all Products");
+                        Console.WriteLine("(2) Display only active Products");
+                        Console.WriteLine("(3) Display only discontinued Products");
+
+                        var keypress3 = Console.ReadKey();
+                        Console.WriteLine("");
+
+                        if (choice == null)
+                        {
+
+                        }
+
+                        else if (keypress3.Key == ConsoleKey.D1 || keypress3.Key == ConsoleKey.NumPad1)
+                        {
+                            disOp.DisplayCategoryAndProducts(choice);
+
+                        }
+                        else if (keypress3.Key == ConsoleKey.D2 || keypress3.Key == ConsoleKey.NumPad2)
+                        {
+                            disOp.DisplayCategoryAndActiveProducts(choice);
+                        }
+                        else if (keypress3.Key == ConsoleKey.D3 || keypress3.Key == ConsoleKey.NumPad3)
+                        {
+                            disOp.DisplayCategoryAndDiscontinuedProducts(choice);
+                        }
+                        else
+                        {
+                            logging.Log("WARN", "Please press a valid option. Try again.");
+                        }
+                    }
+
+
+
+
                 }
-
-
-
-                Console.WriteLine("(1) Display all Products");
-                Console.WriteLine("(2) Display only active Products");
-                Console.WriteLine("(3) Display only discontinued Products");
-
-                var keypress3 = Console.ReadKey();
-                Console.WriteLine("");
-
-                if (choice == null)
+                else if (keypress.Key == ConsoleKey.Escape)
                 {
-
-                }
-
-                else if (keypress3.Key == ConsoleKey.D1 || keypress3.Key == ConsoleKey.NumPad1)
-                {
-                    disOp.DisplayCategoryAndProducts(choice);
-
-                }
-                else if (keypress3.Key == ConsoleKey.D2 || keypress3.Key == ConsoleKey.NumPad2)
-                {
-                    disOp.DisplayCategoryAndActiveProducts(choice);
-                }
-                else if (keypress3.Key == ConsoleKey.D3 || keypress3.Key == ConsoleKey.NumPad3)
-                {
-                    disOp.DisplayCategoryAndDiscontinuedProducts(choice);
+                    break;
                 }
                 else
                 {
                     logging.Log("WARN", "Please press a valid option. Try again.");
                 }
-
-
-            }
-            else
-            {
-                logging.Log("WARN", "Please press a valid option. Try again.");
-            }
+            } while (true);
 
 
 

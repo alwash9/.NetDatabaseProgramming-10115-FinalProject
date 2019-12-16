@@ -81,6 +81,26 @@ namespace NorthwindDB_Console_Final.Utility
             } while (true);
         }
 
+        protected bool ValidateDecimal(string input)
+        {
+            if (input == "")
+            {
+                return true;
+            }
+            var check = decimal.TryParse(input, out decimal result);
+            return check;
+        }
+
+        protected bool ValidateInt16(string input)
+        {
+            if (input == "")
+            {
+                return true;
+            }
+            var check = Int16.TryParse(input, out short result);
+            return check;
+        }
+
         //Confirms selections for Products
         protected bool ConfirmSelections(Product product)
         {
@@ -98,7 +118,8 @@ namespace NorthwindDB_Console_Final.Utility
             Console.WriteLine("Units In Stock: {0}", product.UnitsInStock);
             Console.WriteLine("Units On Order: {0}", product.UnitsOnOrder);
             Console.WriteLine("Reorder Level: {0}", product.ReorderLevel);
-            Console.WriteLine("Discontinued: {0}\n", product.Discontinued);
+            Console.WriteLine("Discontinued: {0}", product.Discontinued);
+            Console.WriteLine("Category ID: {0}\n", product.CategoryId);
 
 
             do
@@ -124,7 +145,6 @@ namespace NorthwindDB_Console_Final.Utility
                     logging.Log("ERROR", "A valid key was not pressed. Please press (Y)es or (N)o.");
                 }
 
-                keypress = Console.ReadKey();
 
             } while (true);
 
@@ -162,7 +182,6 @@ namespace NorthwindDB_Console_Final.Utility
                     logging.Log("ERROR", "A valid key was not pressed. Please press (Y)es or (N)o.");
                 }
 
-                keypress = Console.ReadKey();
 
             } while (true);
 

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using NorthwindDB_Console_Final.Logging;
 using NorthwindDB_Console_Final.Utility;
 using NorthwindDB_Console_Final.Models;
-using NorthwindDB_Console_Final.Control;
+
 
 namespace NorthwindDB_Console_Final.Menus
 {
@@ -16,10 +16,10 @@ namespace NorthwindDB_Console_Final.Menus
         {
             do
             {
-                Console.WriteLine("\tEDIT PRODUCTS\n");
+                Console.WriteLine("\n\tEDIT PRODUCTS\n");
 
-                Console.WriteLine("(1) Display all products (Not Implemented)");
-                Console.WriteLine("(2) Search for a specific product to edit (By the Product Name)");
+                Console.WriteLine("(1) Display all products");
+                Console.WriteLine("(2) Search for a specific product to edit by the Product Name");
                 Console.WriteLine("(3) Find product to edit by Product ID");
 
                 Console.WriteLine("Press ESC to go back");
@@ -30,13 +30,20 @@ namespace NorthwindDB_Console_Final.Menus
                 NLogger logging = new NLogger();
                 DisplayOptions disOp = new DisplayOptions();
 
-                if (keypress.Key == ConsoleKey.D2 || keypress.Key == ConsoleKey.NumPad2)
+                //Display all products in a short format
+                if (keypress.Key == ConsoleKey.D1 || keypress.Key == ConsoleKey.NumPad1)
+                {
+                    disOp.DisplayAllProducts_Short();
+                }
+
+                //Search for product to edit by name
+                else if (keypress.Key == ConsoleKey.D2 || keypress.Key == ConsoleKey.NumPad2)
                 {
                     NorthwindContext db = new NorthwindContext();
                     Console.WriteLine("Which product are you looking for?");
 
                     var results = db.SearchProducts(Console.ReadLine());
-                    var rList = results.ToList();
+                    
 
 
 
@@ -46,7 +53,7 @@ namespace NorthwindDB_Console_Final.Menus
                     }
                     else if (results.Count() == 1)
                     {
-                        disOp.DisplayProducts_Short(rList);
+                        disOp.DisplayProducts_Short(results);
 
                         Console.WriteLine("Is this the correct Product?");
                         Console.WriteLine("If yes, Press Y. If No, Press N.");
@@ -59,7 +66,7 @@ namespace NorthwindDB_Console_Final.Menus
 
                             if (keypress2.Key == ConsoleKey.Y)
                             {
-                                int pickID = rList[0].ProductID;
+                                int pickID = results[0].ProductID;
                                 Product pick = results.FirstOrDefault(p => p.ProductID == pickID);
                                 EditProduct(pick);
                                 break;
@@ -80,7 +87,7 @@ namespace NorthwindDB_Console_Final.Menus
                     {
 
 
-                        disOp.DisplayProducts_Short(rList);
+                        disOp.DisplayProducts_Short(results);
 
 
                         Console.WriteLine("Which Product would you like to edit?");
@@ -89,7 +96,7 @@ namespace NorthwindDB_Console_Final.Menus
                         string choice = Console.ReadLine();
                         int vInput = IntValidation(choice);
 
-                        int findID = rList[vInput - 1].ProductID;
+                        int findID = results[vInput - 1].ProductID;
                         Product pick = results.FirstOrDefault(p => p.ProductID == findID);
 
                         EditProduct(pick);
@@ -97,6 +104,7 @@ namespace NorthwindDB_Console_Final.Menus
                     }
 
                 }
+                //Find product to edit by ID
                 else if (keypress.Key == ConsoleKey.D3 || keypress.Key == ConsoleKey.NumPad3)
                 {
                     NorthwindContext db = new NorthwindContext();
@@ -105,8 +113,7 @@ namespace NorthwindDB_Console_Final.Menus
                     int toFind = IntValidation(check);
 
 
-                    var results = db.Products.Where(p => p.ProductID == toFind);
-                    var rList = results.ToList();
+                    var results = db.Products.Where(p => p.ProductID == toFind).ToList();
 
                     if (results.Count() == 0)
                     {
@@ -114,7 +121,7 @@ namespace NorthwindDB_Console_Final.Menus
                     }
                     else if (results.Count() == 1)
                     {
-                        disOp.DisplayProducts_Short(rList);
+                        disOp.DisplayProducts_Short(results);
 
                         Console.WriteLine("Is this the correct Product?");
                         Console.WriteLine("If yes, Press Y. If No, Press N.");
@@ -128,7 +135,7 @@ namespace NorthwindDB_Console_Final.Menus
                             if (keypress2.Key == ConsoleKey.Y)
                             {
 
-                                EditProduct(rList[0]);
+                                EditProduct(results[0]);
                                 break;
                             }
                             else if (keypress2.Key == ConsoleKey.N)
@@ -146,7 +153,7 @@ namespace NorthwindDB_Console_Final.Menus
                     else
                     {
 
-                        disOp.DisplayProducts_Short(rList);
+                        disOp.DisplayProducts_Short(results);
 
 
                         Console.WriteLine("Which Product would you like to edit?");
@@ -156,7 +163,7 @@ namespace NorthwindDB_Console_Final.Menus
                         int vInput = IntValidation(choice);
 
 
-                        EditProduct(rList[vInput - 1]);
+                        EditProduct(results[vInput - 1]);
 
                     }
 
@@ -183,7 +190,7 @@ namespace NorthwindDB_Console_Final.Menus
             do
             {
 
-                Console.WriteLine("Which part of the product would you like to edit?");
+                Console.WriteLine("\nWhich part of the product would you like to edit?");
 
                 Console.WriteLine("(1) ProductName");
                 Console.WriteLine("(2) QuantityPerUnit");
@@ -192,6 +199,7 @@ namespace NorthwindDB_Console_Final.Menus
                 Console.WriteLine("(5) UnitsOnOrder");
                 Console.WriteLine("(6) ReorderLevel");
                 Console.WriteLine("(7) Discontinued");
+                Console.WriteLine("(8) Category");
 
                 Console.WriteLine("When you are finish editing the product press (0) to save and go back.");
 
@@ -239,6 +247,11 @@ namespace NorthwindDB_Console_Final.Menus
                 if (keyPress.Key == ConsoleKey.D7 || keyPress.Key == ConsoleKey.NumPad7)
                 {
                     change.Discontinued = pa.Discontinued_Input();
+                }
+
+                if (keyPress.Key == ConsoleKey.D8 || keyPress.Key == ConsoleKey.NumPad8)
+                {
+                    change.CategoryId = pa.Category_Input();
                 }
 
             } while (true);

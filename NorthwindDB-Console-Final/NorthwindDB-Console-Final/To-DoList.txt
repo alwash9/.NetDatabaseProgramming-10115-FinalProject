@@ -48,7 +48,7 @@ Immediate to do list:
 FIX
 1. topmenu won't connect to product menu (Fixed? Don't remember the issue.)
 2. logger isn't logging. (Fixed: packages missing.)
-3. TopMenu grammar.
+3. TopMenu grammar. (DONE)
 4. Change Yes/No prompts to readline in Add products
 5. Validate duplicate names
 6. Add ability to add category ID to products

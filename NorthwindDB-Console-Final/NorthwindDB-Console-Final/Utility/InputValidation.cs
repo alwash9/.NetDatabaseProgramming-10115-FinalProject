@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using NorthwindDB_Console_Final.Logging;
 
-namespace NorthwindDB_Console_Final.Control
+namespace NorthwindDB_Console_Final.Utility
 {
     class InputValidation
     {

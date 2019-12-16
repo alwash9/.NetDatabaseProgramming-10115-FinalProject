@@ -75,10 +75,13 @@ namespace NorthwindDB_Console_Final.Models
 
             try
             {
-                NorthwindContext db = new NorthwindContext();
-                var toDelete = db.Products.Attach(product);
-                db.Products.Remove(toDelete);
-                //db.Entry(product).State = EntityState.Deleted;
+                var toDelete = this.Products.FirstOrDefault(d => d.ProductID == product.ProductID);
+                this.Products.Remove(toDelete);
+                //var toDelete = this.Products.Attach(product);
+                //this.Products.Remove(product);
+                //this.Entry(product).State = EntityState.Deleted;
+                this.SaveChanges();
+                logger.Log("INFO", "Product has been deleted.");
             }
             catch (Exception ex)
             {
@@ -88,16 +91,18 @@ namespace NorthwindDB_Console_Final.Models
 
         }
 
+
         public void RemoveCategory(Category category)
         {
             NLogger logger = new NLogger();
 
             try
             {
-                NorthwindContext db = new NorthwindContext();
-                var toDelete = db.Categories.Attach(category);
-                db.Categories.Remove(toDelete);
+                var toDelete = this.Categories.FirstOrDefault(d => d.CategoryId == category.CategoryId);
+                this.Categories.Remove(toDelete);
                 //db.Entry(product).State = EntityState.Deleted;
+                this.SaveChanges();
+                logger.Log("INFO", "Category has been deleted.");
             }
             catch (Exception ex)
             {
@@ -107,11 +112,33 @@ namespace NorthwindDB_Console_Final.Models
 
         }
 
-        //fix
-        public IQueryable<Product> SearchProducts(string searchName)
+        public void RemoveCategoryProducts(Category category)
+        {
+            NLogger logger = new NLogger();
+
+            try
+            {
+                var toDelete = this.Categories.FirstOrDefault(d => d.CategoryId == category.CategoryId);
+                this.Products.RemoveRange(toDelete.Products);
+                //var toDelete = this.Products.Attach(product);
+                //this.Products.Remove(product);
+                //this.Entry(product).State = EntityState.Deleted;
+                this.SaveChanges();
+                logger.Log("INFO", "Products have been deleted.");
+            }
+            catch (Exception ex)
+            {
+                logger.Log("ERROR", "An error occurred when attempting to delete a product.\n" + ex);
+                throw;
+            }
+
+        }
+
+
+        public List<Product> SearchProducts(string searchName)
         {
             NLogger logging = new NLogger();
-            var searchResult = this.Products.Where(b => b.ProductName.Contains(searchName));
+            var searchResult = this.Products.Where(p => p.ProductName.Contains(searchName)).ToList();
 
             if (searchResult.Count() == 0)
             {
@@ -121,22 +148,18 @@ namespace NorthwindDB_Console_Final.Models
             }
             else
             {
-                //Console.WriteLine($"{"Product ID",-10}Product Name\n");
-                //foreach (var item in searchResult)
-                //{
-                //    Console.WriteLine($"{item.ProductID,-10}{item.ProductName}\n");
-                //}
 
+                logging.Log("INFO", searchResult.Count() + " Products Found.");
             }
 
 
             return searchResult;
         }
 
-        public IQueryable<Product> SearchProducts(int searchNum)
+        public List<Product> SearchProducts(int searchNum)
         {
             NLogger logging = new NLogger();
-            var searchResult = this.Products.Where(p => p.ProductID == searchNum);
+            var searchResult = this.Products.Where(p => p.ProductID == searchNum).ToList();
 
             if (searchResult.Count() == 0)
             {
@@ -146,11 +169,7 @@ namespace NorthwindDB_Console_Final.Models
             }
             else
             {
-                //Console.WriteLine($"{"Product ID",-10}Product Name\n");
-                //foreach (var item in searchResult)
-                //{
-                //    Console.WriteLine($"{item.ProductID,-10}{item.ProductName}\n");
-                //}
+                logging.Log("INFO", searchResult.Count() + " Products Found.");
 
             }
 
@@ -164,15 +183,15 @@ namespace NorthwindDB_Console_Final.Models
         /// <param name="searchName"></param>
         /// <param name="type">true = by CategoryName false = Description</param>
         /// <returns></returns>
-        public IQueryable<Category> SearchCategory(string searchName, bool type)
+        public List<Category> SearchCategory(string searchName, bool type)
         {
             NLogger logging = new NLogger();
-            IQueryable<Category> searchResult;
+            List<Category> searchResult;
 
 
             if (type == true)
             {
-                searchResult = this.Categories.Where(c => c.Description.Contains(searchName));
+                searchResult = this.Categories.Where(c => c.CategoryName.Contains(searchName)).ToList();
 
                 if (searchResult.Count() == 0)
                 {
@@ -182,18 +201,14 @@ namespace NorthwindDB_Console_Final.Models
                 }
                 else
                 {
-                    //Console.WriteLine($"{"Product ID",-10}Product Name\n");
-                    //foreach (var item in searchResult)
-                    //{
-                    //    Console.WriteLine($"{item.ProductID,-10}{item.ProductName}\n");
-                    //}
+                    logging.Log("INFO", searchResult.Count() + " Categories Found.");
 
                 }
             }
 
             else
             {
-                searchResult = this.Categories.Where(c => c.CategoryName.Contains(searchName));
+                searchResult = this.Categories.Where(c => c.Description.Contains(searchName)).ToList();
 
                 if (searchResult.Count() == 0)
                 {
@@ -203,12 +218,7 @@ namespace NorthwindDB_Console_Final.Models
                 }
                 else
                 {
-                    //Console.WriteLine($"{"Product ID",-10}Product Name\n");
-                    //foreach (var item in searchResult)
-                    //{
-                    //    Console.WriteLine($"{item.ProductID,-10}{item.ProductName}\n");
-                    //}
-
+                    logging.Log("INFO", searchResult.Count() + " Categories Found.");
                 }
 
             }
@@ -218,10 +228,10 @@ namespace NorthwindDB_Console_Final.Models
             return searchResult;
         }
 
-        public IQueryable<Category> SearchCategory(int searchNum)
+        public List<Category> SearchCategory(int searchNum)
         {
             NLogger logging = new NLogger();
-            var searchResult = this.Categories.Where(c => c.CategoryId == searchNum);
+            var searchResult = this.Categories.Where(c => c.CategoryId == searchNum).ToList();
 
             if (searchResult.Count() == 0)
             {
@@ -231,11 +241,7 @@ namespace NorthwindDB_Console_Final.Models
             }
             else
             {
-                //Console.WriteLine($"{"Product ID",-10}Product Name\n");
-                //foreach (var item in searchResult)
-                //{
-                //    Console.WriteLine($"{item.ProductID,-10}{item.ProductName}\n");
-                //}
+                logging.Log("INFO", searchResult.Count() + " Categories Found.");
 
             }
 
