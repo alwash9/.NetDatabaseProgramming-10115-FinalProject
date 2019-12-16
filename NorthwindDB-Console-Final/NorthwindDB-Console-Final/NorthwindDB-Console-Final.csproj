@@ -87,6 +87,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Utility\Creation script.txt" />
     <None Include="App.config" />
     <None Include="ConfigTemplate.config" />
     <Content Include="NLog.config">

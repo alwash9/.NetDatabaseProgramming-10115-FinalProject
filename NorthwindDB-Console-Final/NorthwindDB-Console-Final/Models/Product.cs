@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace NorthwindDB_Console_Final.Models
 {
     public class Product
     {
         public int ProductID { get; set; }
-        //Required
+        [Required(ErrorMessage = "A Product Name is required and can't be NULL for this entity")]
         public string ProductName { get; set; }
         public string QuantityPerUnit { get; set; }
         public decimal? UnitPrice { get; set; }
