@@ -61,16 +61,24 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Control\InputValidation.cs" />
-    <Compile Include="Control\ProductsAttr.cs" />
+    <Compile Include="Menus\DeleteCategoriesMenu.cs" />
+    <Compile Include="Menus\DeleteProductsMenu.cs" />
+    <Compile Include="Menus\DisplayCategoryMenu.cs" />
+    <Compile Include="Menus\EditCategoryMenu.cs" />
+    <Compile Include="Utility\DisplayOptions.cs" />
+    <Compile Include="Utility\InputValidation.cs" />
+    <Compile Include="Utility\ModelInputValidation.cs" />
+    <Compile Include="Utility\TestingClass.cs" />
     <Compile Include="Logging\NLogger.cs" />
+    <Compile Include="Menus\AddCategory.cs" />
     <Compile Include="Menus\AddProductsMenu.cs" />
-    <Compile Include="Menus\DisplayMenu.cs" />
+    <Compile Include="Menus\CategoriesMenu.cs" />
+    <Compile Include="Menus\DisplayProductMenu.cs" />
     <Compile Include="Menus\EditProductsMenu.cs" />
     <Compile Include="Menus\IMenu.cs" />
     <Compile Include="Menus\ProductsMenu.cs" />
     <Compile Include="Menus\TopMenu.cs" />
-    <Compile Include="Menus\ValidationOptions.cs" />
+    <Compile Include="Utility\ValidationOptions.cs" />
     <Compile Include="Models\Category.cs" />
     <Compile Include="Models\NorthwindContext.cs" />
     <Compile Include="Models\Product.cs" />

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NorthwindDB_Console_Final.Control;
 using NorthwindDB_Console_Final.Logging;
 
 
@@ -23,6 +24,7 @@ namespace NorthwindDB_Console_Final.Menus
 
 
                 Console.WriteLine("(1) PRODUCTS MENU");
+                Console.WriteLine("(0) TESTING");
                 Console.WriteLine("(ESC) Exit");
 
 
@@ -35,8 +37,15 @@ namespace NorthwindDB_Console_Final.Menus
                     pMenu.Start();
                 }
 
+                if (keypress.Key == ConsoleKey.D0 || keypress.Key == ConsoleKey.NumPad0)
+                {
+                    TestingClass testMenu = new TestingClass();
+                    testMenu.Start();
+                }
 
-                else if(keypress.Key == ConsoleKey.Escape)
+
+
+                else if (keypress.Key == ConsoleKey.Escape)
                 {
                     logging.Log("WARN","Are you sure that you would like to quit the application?");
                     Console.WriteLine("Press the \"Y\" key if you'd truly like to exit, otherwise press any other key to continue.");

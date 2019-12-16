@@ -7,12 +7,18 @@ using NorthwindDB_Console_Final.Logging;
 using NorthwindDB_Console_Final.Menus;
 
 
-namespace NorthwindDB_Console_Final.Control
+namespace NorthwindDB_Console_Final.Utility
 {
-    class ProductsAttr
+    //Made to improve readability and reduce clutter in the edit classes
+    class ModelInputValidation : ValidationOptions
     {
-        private string nullableMessage = "\n\t* Note: This field allows null. Press nothing but ENTER to leave blank.";
+        //private string nullableMessage = "\n\t* Note: This field allows null. Press nothing but ENTER to leave blank.";
         private NLogger logging = new NLogger();
+
+
+        //PRODUCTS
+
+
 
         public string ProductName_Input()
         {
@@ -22,6 +28,8 @@ namespace NorthwindDB_Console_Final.Control
 
             return productName;
         }
+
+
 
         public string QuantityPerUnit_Input()
         {
@@ -185,6 +193,25 @@ namespace NorthwindDB_Console_Final.Control
             } while (true);
 
             return discontinued;
+        }
+
+
+        //CATEGORIES
+
+        public string CategoryName_Input()
+        {
+            Console.WriteLine("Please enter the category's name.");
+            string categoryName = Console.ReadLine();
+
+            return categoryName;
+        }
+
+        public string CategoryDescription_Input()
+        {
+            Console.WriteLine("Please enter the category's description.");
+            string categoryDescription = Console.ReadLine();
+
+            return categoryDescription;
         }
     }
 }

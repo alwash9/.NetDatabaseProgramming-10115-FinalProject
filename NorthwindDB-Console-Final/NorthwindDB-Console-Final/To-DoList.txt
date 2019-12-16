@@ -1,4 +1,24 @@
-﻿To receive a maximum letter grade of “C” (405 out of 500 points), your application must perform the following on demand:
+﻿To receive a maximum letter grade of “A” (475 out of 500 points), your application must perform the following on demand:
+
+1. Include all of the features from the "B" & "C" projects
+2. Delete a specified existing record from the Products table (account for Orphans in related tables)
+3. Delete a specified existing record from the Categories table (account for Orphans in related tables)
+4. Use data annotations and handle ALL user errors gracefully & log all errors using NLog
+
+
+
+To receive a maximum letter grade of “B” (445 out of 500 points), your application must perform the following on demand:
+
+1. Include all of the features from the “C” project (PENDING)
+2. Add new records to the Categories table (DONE/PENDING)
+3. Edit a specified record from the Categories table (DONE/PENDING)
+4. Display all Categories in the Categories table (CategoryName and Description) (DONE/PENDING)
+5. Display all Categories and their related active (not discontinued) product data (CategoryName, ProductName) (DONE/PENDING)
+6. Display a specific Category and its related active product data (CategoryName, ProductName) (DONE/PENDING)
+
+
+
+To receive a maximum letter grade of “C” (405 out of 500 points), your application must perform the following on demand:
 
 1. Add new records to the Products table (DONE)
 2. Edit a specified record from the Products table (PENDING)
@@ -11,16 +31,18 @@
 
 Immediate to do list:
 1.Set up NLog class (DONE)
-2.Set up top menu
-3.Add Product Menu (DONE/ONGOING)
-4.Menu interface
-5.Loop TopMenu
+2.Set up top menu (ONGOING)
+3.Add Product Menu (DONE/PENDING)
+4.Menu interface (DONE)
+5.Loop TopMenu (DONE/PENDING)
 6.Modulate Add Product Menu options to be used in edit. (DONE/PENDING)
-7.Set up interfaces
+7.Set up interfaces(PENDING)
 8.Create display products (DONE/PENDING)
 9.Denote $
-10. Create Search
+10. Create Search (PRODUCT = DONE)
 11. Menu looping
+12. Context validation
+13. Multiple Inheritance
 
 
 FIX
@@ -28,11 +50,15 @@ FIX
 2. logger isn't logging. (Fixed: packages missing.)
 3. TopMenu grammar.
 4. Change Yes/No prompts to readline in Add products
+5. Validate duplicate names
+6. Add ability to add category ID to products
 
 Products to do list:
 1.Make sure unit price is no more than 2 decimals
 2.Confirmation before product is entered (DONE)
-3.
+
+Categories to do list:
+
 
 ON
 Edit Product.

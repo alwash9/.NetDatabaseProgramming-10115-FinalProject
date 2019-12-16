@@ -11,7 +11,7 @@ namespace NorthwindDB_Console_Final.Models
 {
     public class NorthwindContext : DbContext
     {
-        public NorthwindContext() : base("name=NorthwindContext") { }
+        public NorthwindContext() : base("name = NorthwindContext") { }
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
@@ -52,7 +52,63 @@ namespace NorthwindDB_Console_Final.Models
             
         }
 
-        public IQueryable<Product> SearchProductsByName(string searchName)
+        public void AddCategory(Category category)
+        {
+            NLogger logger = new NLogger();
+            try
+            {
+                this.Categories.Add(category);
+                this.SaveChanges();
+                logger.Log("INFO", "Category has been added.");
+            }
+            catch (Exception ex)
+            {
+                logger.Log("ERROR", "An error occurred when attempting to add a new category.\n" + ex);
+                throw;
+            }
+
+        }
+
+        public void RemoveProduct(Product product)
+        {
+            NLogger logger = new NLogger();
+
+            try
+            {
+                NorthwindContext db = new NorthwindContext();
+                var toDelete = db.Products.Attach(product);
+                db.Products.Remove(toDelete);
+                //db.Entry(product).State = EntityState.Deleted;
+            }
+            catch (Exception ex)
+            {
+                logger.Log("ERROR", "An error occurred when attempting to delete a product.\n" + ex);
+                throw;
+            }
+
+        }
+
+        public void RemoveCategory(Category category)
+        {
+            NLogger logger = new NLogger();
+
+            try
+            {
+                NorthwindContext db = new NorthwindContext();
+                var toDelete = db.Categories.Attach(category);
+                db.Categories.Remove(toDelete);
+                //db.Entry(product).State = EntityState.Deleted;
+            }
+            catch (Exception ex)
+            {
+                logger.Log("ERROR", "An error occurred when attempting to delete a category.\n" + ex);
+                throw;
+            }
+
+        }
+
+        //fix
+        public IQueryable<Product> SearchProducts(string searchName)
         {
             NLogger logging = new NLogger();
             var searchResult = this.Products.Where(b => b.ProductName.Contains(searchName));
@@ -77,67 +133,119 @@ namespace NorthwindDB_Console_Final.Models
             return searchResult;
         }
 
-        public void DisplayProducts_Short(List<Product> products)
+        public IQueryable<Product> SearchProducts(int searchNum)
         {
-            Console.WriteLine($"{"Product ID", -20}{"Product Name", -20}\n");
-            int Row = 0;
+            NLogger logging = new NLogger();
+            var searchResult = this.Products.Where(p => p.ProductID == searchNum);
 
-            foreach (var product in products)
+            if (searchResult.Count() == 0)
             {
-                Console.Write($"{++Row,-10}");
-                Console.Write($"{product.ProductID, -20}");
-                Console.Write($"{product.ProductName, -20}\n");
+
+                logging.Log("WARN", "There were no products found.");
+
             }
-        }
-
-        public void DisplayProducts_Short(IQueryable<Product> products)
-        {
-            Console.WriteLine($"{"Product ID",-20}{"Product Name",-20}\n");
-
-            foreach (var product in products)
+            else
             {
-                Console.Write($"{product.ProductID,-20}");
-                Console.Write($"{product.ProductName,-20}");
-            }
-        }
+                //Console.WriteLine($"{"Product ID",-10}Product Name\n");
+                //foreach (var item in searchResult)
+                //{
+                //    Console.WriteLine($"{item.ProductID,-10}{item.ProductName}\n");
+                //}
 
-        public void DisplayAllProducts_Short()
-        {
-            var allP = this.Products.OrderBy(b => b.ProductID);
-
-            Console.WriteLine($"{"Product ID",-20}{"Product Name",-20}\n");
-
-            foreach (var product in allP)
-            {
-                Console.Write($"{product.ProductID,-20}");
-                Console.Write($"{product.ProductName,-20}");
-            }
-        }
-
-        public void DisplayAllProducts_Full()
-        {
-            var allP = this.Products.OrderBy(b => b.ProductID);
-
-            foreach (var product in allP)
-            {
-                Console.WriteLine($"{"Product ID",          -25}{product.ProductID}");
-                Console.WriteLine($"{"Product Name",        -25}{product.ProductName}");
-                Console.WriteLine($"{"Quantity Per Unit",   -25}{product.QuantityPerUnit}");
-                Console.WriteLine($"{"Unit Price",          -25}{product.UnitPrice}");
-                Console.WriteLine($"{"Units In Stock",      -25}{product.UnitsInStock}");
-                Console.WriteLine($"{"Units On Order",      -25}{product.UnitsOnOrder}");
-                Console.WriteLine($"{"Reorder Level",       -25}{product.ReorderLevel}");
-                Console.WriteLine($"{"Discontinued",        -25}{product.Discontinued}");
             }
 
 
+            return searchResult;
+        }
+
+        /// <summary>
+        /// Search categories by name or description. 
+        /// </summary>
+        /// <param name="searchName"></param>
+        /// <param name="type">true = by CategoryName false = Description</param>
+        /// <returns></returns>
+        public IQueryable<Category> SearchCategory(string searchName, bool type)
+        {
+            NLogger logging = new NLogger();
+            IQueryable<Category> searchResult;
 
 
+            if (type == true)
+            {
+                searchResult = this.Categories.Where(c => c.Description.Contains(searchName));
+
+                if (searchResult.Count() == 0)
+                {
+
+                    logging.Log("WARN", "There were no categories found.");
+
+                }
+                else
+                {
+                    //Console.WriteLine($"{"Product ID",-10}Product Name\n");
+                    //foreach (var item in searchResult)
+                    //{
+                    //    Console.WriteLine($"{item.ProductID,-10}{item.ProductName}\n");
+                    //}
+
+                }
+            }
+
+            else
+            {
+                searchResult = this.Categories.Where(c => c.CategoryName.Contains(searchName));
+
+                if (searchResult.Count() == 0)
+                {
+
+                    logging.Log("WARN", "There were no categories found.");
+
+                }
+                else
+                {
+                    //Console.WriteLine($"{"Product ID",-10}Product Name\n");
+                    //foreach (var item in searchResult)
+                    //{
+                    //    Console.WriteLine($"{item.ProductID,-10}{item.ProductName}\n");
+                    //}
+
+                }
+
+            }
+
+
+
+            return searchResult;
+        }
+
+        public IQueryable<Category> SearchCategory(int searchNum)
+        {
+            NLogger logging = new NLogger();
+            var searchResult = this.Categories.Where(c => c.CategoryId == searchNum);
+
+            if (searchResult.Count() == 0)
+            {
+
+                logging.Log("WARN", "There were no categories found.");
+
+            }
+            else
+            {
+                //Console.WriteLine($"{"Product ID",-10}Product Name\n");
+                //foreach (var item in searchResult)
+                //{
+                //    Console.WriteLine($"{item.ProductID,-10}{item.ProductName}\n");
+                //}
+
+            }
+
+
+            return searchResult;
         }
 
 
 
-        public void AddCategory(Category category)
+        public void AddCategory2(Category category)
         {
             NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
             if(this.Validation(category))

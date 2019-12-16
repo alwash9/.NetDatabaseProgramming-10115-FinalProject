@@ -4,12 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using NorthwindDB_Console_Final.Models;
+using NorthwindDB_Console_Final.Utility;
 using NorthwindDB_Console_Final.Logging;
 using System.Reflection;
 
 namespace NorthwindDB_Console_Final.Menus
 {
-    class AddProductsMenu
+    class AddProductsMenu : ValidationOptions, IMenu
     {
         public void Start()
         {
@@ -23,9 +24,9 @@ namespace NorthwindDB_Console_Final.Menus
 
             string tempn;
             NLogger logging = new NLogger();
-            string nullableMessage = "\n\t* Note: This field allows null. Press nothing but ENTER to leave blank.";
+            //string nullableMessage = "\n\t* Note: This field allows null. Press nothing but ENTER to leave blank.";
 
-            Console.WriteLine("Please enter the product's name.");
+            Console.WriteLine("Please enter the product's name. (Required)");
             productName = Console.ReadLine();
 
             Console.WriteLine("What is the quantity/unit for this product.");
@@ -158,7 +159,19 @@ namespace NorthwindDB_Console_Final.Menus
                 Discontinued = discontinued
             };
 
-            ConfirmSelections(product);
+            if (ConfirmSelections(product) == true)
+            {
+                NorthwindContext db = new NorthwindContext();
+
+                db.AddProduct(product);
+            }
+            else
+            {
+                logging.Log("INFO", "Operation Cancelled.");
+                
+            }
+            
+
 
         }
 
@@ -185,7 +198,7 @@ namespace NorthwindDB_Console_Final.Menus
             return check;
         }
 
-        private void ConfirmSelections(Product product)
+        /*private void ConfirmSelections(Product product)
         {
             NLogger logging = new NLogger();
 
@@ -230,6 +243,6 @@ namespace NorthwindDB_Console_Final.Menus
             } while (true);
 
             Console.ReadLine();
-        }
+        }*/
     }
 }

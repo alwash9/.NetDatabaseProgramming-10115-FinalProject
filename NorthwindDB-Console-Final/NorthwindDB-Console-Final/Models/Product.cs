@@ -5,6 +5,7 @@ namespace NorthwindDB_Console_Final.Models
     public class Product
     {
         public int ProductID { get; set; }
+        //Required
         public string ProductName { get; set; }
         public string QuantityPerUnit { get; set; }
         public decimal? UnitPrice { get; set; }
